@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {check, validationResult} = reuire('express-validator')
+const {check, validationResult} = require('express-validator')
 const User = require("../../models/User")
 
 // @route:   GET api/auth
@@ -32,7 +32,7 @@ router.post(
         const errors = validationResult(req)
 
         if(!errors.isEmpty()) {
-            return res.status(400).json({errors.array()})
+            return res.status(400).json({errors: errors.array()})
 
         }
     const { email, password} = req.body;
