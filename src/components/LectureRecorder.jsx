@@ -21,14 +21,16 @@ function LectureRecorder() {
   };
 
   const stopRecording = async () => {
+    console.log("click")
     if (isRecording) {
       const mediaRecorder = mediaRecorderRef.current;
       if (mediaRecorder) { 
         mediaRecorder.stop();
+        console.log("stopped")
         setIsRecording(false);
 
         const formData = new FormData();
-        formData.append('audioBlob', new Blob(recordedBlobs, { type: 'audio/webm' })); // Adjust format as needed
+        formData.append('audioBlob', new Blob(recordedBlobs, { type: 'audio/webm' })); 
         const response = await fetch('/api/save-recording', {
           method: 'POST',
           body: formData,
@@ -59,7 +61,7 @@ function LectureRecorder() {
 
   return (
     <div>
-      <button onClick={startRecording} disabled={isRecording}>
+      <button onClick={isRecording ? stopRecording : startRecording} disabled={isRecording}>
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </button>
     </div>
