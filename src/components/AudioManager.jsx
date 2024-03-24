@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Modal from "./modal/Modal";
-import { UrlInput } from "./modal/UrlInput";
+import { UrlInput } from "./modal/Urlinput";
 import AudioPlayer from "./AudioPlayer";
 import { TranscribeButton } from "./TranscribeButton";
 import Constants from "../utils/Constants";

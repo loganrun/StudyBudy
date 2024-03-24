@@ -1,11 +1,11 @@
 import { useRef, useEffect } from "react";
 
-import  {transcribedData} from '../hooks/use.Transcriber'
+//import  {transcribedData} from '../hooks/use.Transcriber'
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 
 
-export default function Transcript() {
-    const divRef = useRef<HTMLDivElement>(null);
+export default function Transcript({transcribedData}) {
+    const divRef = useRef(null);
 
     const saveBlob = (blob, filename) => {
         const url = URL.createObjectURL(blob);
