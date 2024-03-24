@@ -1,5 +1,5 @@
 function padTime(time) {
-    return String(time).padStart(2, "0");
+    return time.padStart(2, "0");
 }
 
 export function formatAudioTimestamp(time) {
