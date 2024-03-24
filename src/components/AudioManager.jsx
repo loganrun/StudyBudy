@@ -123,11 +123,11 @@ const LANGUAGES = {
     su: "sundanese",
 };
 
-// export  AudioSource {
-//     URL = "URL",
-//     FILE = "FILE",
-//     RECORDING = "RECORDING",
-// }
+const AudioSource = Object.freeze( {
+    URL: "URL",
+    FILE : "FILE",
+    RECORDING : "RECORDING",
+})
 
 export function AudioManager(props = { transcriber}) {
     const [progress, setProgress] = useState(undefined);
@@ -161,9 +161,11 @@ export function AudioManager(props = { transcriber}) {
     };
 
     const setAudioFromRecording = async (data) => {
+        console.log(data)
         resetAudio();
         setProgress(0);
         const blobUrl = URL.createObjectURL(data);
+        console.log(blobUrl)
         const fileReader = new FileReader();
         fileReader.onprogress = (event) => {
             setProgress(event.loaded / event.total || 0);
