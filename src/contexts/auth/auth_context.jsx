@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo } from "react"
-import {useCookies} from 'react-cookies'
+import {useCookies} from 'react-cookie'
 import axios from "axios"
 
 const AppContext = createContext()
@@ -7,18 +7,18 @@ const AppContext = createContext()
 
 
 export function UserProvider({children}) {
-    const [cookies, setCookies, removeCookies] = useCookies(['token'])
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     
-    const [userId, setUserId] = useState(cookies.userId)
-    const [userName, setUserName] = useState(cookies.userName)
-    const [userEmail, setUserEmail] = useState(cookies.userEmail)
-    const [userPhone, setUserPhone] = useState(cookies.userPhone)
-    const [userAddress, setUserAddress] = useState(cookies.userAddress)
-    const [userCity, setUserCity] = useState(cookies.userCity)
-    const [userState, setUserState] = useState(cookies.userState)
-    const [userZip, setUserZip] = useState(cookies.userZip)
-    const [userCountry, setUserCountry] = useState(cookies.userCountry)
-    const [userImage, setUserImage] = useState(cookies.userImage)
+    // const [userId, setUserId] = useState(cookies.userId)
+    // const [userName, setUserName] = useState(cookies.userName)
+    // const [userEmail, setUserEmail] = useState(cookies.userEmail)
+    // const [userPhone, setUserPhone] = useState(cookies.userPhone)
+    // const [userAddress, setUserAddress] = useState(cookies.userAddress)
+    // const [userCity, setUserCity] = useState(cookies.userCity)
+    // const [userState, setUserState] = useState(cookies.userState)
+    // const [userZip, setUserZip] = useState(cookies.userZip)
+    // const [userCountry, setUserCountry] = useState(cookies.userCountry)
+    // const [userImage, setUserImage] = useState(cookies.userImage)
 
     const login = async(formData)=>{
 
@@ -32,7 +32,7 @@ export function UserProvider({children}) {
                 }
             })
     
-            setCookies('token', response.data.token)
+            setCookie('token', response.data.token)
     
         } catch (error) {
             
@@ -65,7 +65,7 @@ export function UserProvider({children}) {
     }
 
     const logout = () => {
-        ['token'].forEach((obj)=>{removeCookies(obj);});
+        ['token'].forEach((obj)=>{removeCookie(obj);});
         setToken(null)
         setUserId(null)
         setUserName(null)

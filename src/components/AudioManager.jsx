@@ -229,28 +229,6 @@ export function AudioManager(props = { transcriber}) {
         <>
             <div className='flex flex-col justify-center items-center rounded-lg bg-white shadow-xl shadow-black/5 ring-1 ring-slate-700/10'>
                 <div className='flex flex-row space-x-2 py-2 w-full px-2'>
-                    <UrlTile
-                        icon={<AnchorIcon />}
-                        text={"From URL"}
-                        onUrlUpdate={(e) => {
-                            props.transcriber.onInputChange();
-                            setAudioDownloadUrl(e);
-                        }}
-                    />
-                    <VerticalBar />
-                    <FileTile
-                        icon={<FolderIcon />}
-                        text={"From file"}
-                        onFileUpdate={(decoded, blobUrl, mimeType) => {
-                            props.transcriber.onInputChange();
-                            setAudioData({
-                                buffer: decoded,
-                                url: blobUrl,
-                                source: AudioSource.FILE,
-                                mimeType: mimeType,
-                            });
-                        }}
-                    />
                     {navigator.mediaDevices && (
                         <>
                             <VerticalBar />
