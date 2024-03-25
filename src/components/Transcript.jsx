@@ -28,6 +28,7 @@ function Transcript({ transcribedData }) {
 	const regex = /(	"timestamp": )\\\[\\s+(\\S+)\\s+(\\S+)\\s+\\\]/gm;
 	jsonData = jsonData.replace(regex, "$1[$2 $3]");
 	const blob = new Blob([jsonData], { type: "application/json" });
+    console.log(blob)
 	saveBlob(blob, "transcript.json");
   };
 
@@ -53,7 +54,7 @@ function Transcript({ transcribedData }) {
     	transcribedData.chunks.map((chunk, i) => (
       	<div
         	key={`${i}-${chunk.text}`}
-        	className="w-full flex flex-row mb-2 bg-white rounded-lg p-4 shadow-xl shadow-black/5 ring-1 ring-slate-700/10"
+        	className="w-full flex flex-row mb-2 bg-white rounded-lg p-4 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 text-black"
       	>
         	<div className="mr-5">
           	{formatAudioTimestamp(chunk.timestamp[0])}

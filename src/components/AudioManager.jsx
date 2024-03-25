@@ -541,7 +541,7 @@ function UrlModal(props) {
 }
 
 function FileTile(props) {
-    // const audioPlayer = useRef<HTMLAudioElement>(null);
+    // const audioPlayer = useRef(null);
 
     // Create hidden input element
     let elem = document.createElement("input");
