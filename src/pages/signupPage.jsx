@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 function signupPage() {
 
     const nav = useNavigate()
-    const { signup } = useAuth()
+    const { signUp } = useAuth()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -26,8 +26,8 @@ function signupPage() {
 
     const onSubmit = async(e) =>{
         e.preventDefault()
-        console.log(formData)
-        await signup(formData)
+        //console.log(formData)
+        await signUp(formData)
         nav('/record')
     }
   return (
@@ -51,7 +51,7 @@ function signupPage() {
                 <input
                 id="name"
                 name="name"
-                type="email"
+                type="text"
                 autoComplete="name"
                 required
                 onChange={(e) =>{onChange(e)}}

@@ -1,7 +1,33 @@
-import React from 'react'
+import { useState } from 'react'
+import { useAuth } from '../contexts/auth/auth_context'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 function loginPage() {
+    const nav = useNavigate()
+    const { login } = useAuth()
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    })
+
+    const onChange = (e) =>{
+        setFormData({
+           ...formData,
+
+            [e.target.name]: e.target.value
+           
+        })
+        
+    }
+
+    const onSubmit = async(e) =>{
+        e.preventDefault()
+        //console.log(formData)
+        await login(formData)
+        nav('/record')
+    }
   return (
     <>
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-white mt-32">
@@ -13,7 +39,7 @@ function loginPage() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
+        <form onSubmit={(e)=> onSubmit(e)} className="space-y-6" action="#" method="POST">
             <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
@@ -24,6 +50,7 @@ function loginPage() {
                 name="email"
                 type="email"
                 autoComplete="email"
+                onChange={(e) =>{onChange(e)}}
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -47,6 +74,7 @@ function loginPage() {
                 name="password"
                 type="password"
                 autoComplete="current-password"
+                onChange={(e) =>{onChange(e)}}
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

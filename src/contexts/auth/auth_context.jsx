@@ -55,7 +55,7 @@ export function UserProvider({children}) {
                 }
             })
     
-            setCookies('token', response.data.token)
+            setCookie('token', response.data.token)
     
         } catch (error) {
             
