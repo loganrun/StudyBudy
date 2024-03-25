@@ -1,4 +1,4 @@
-
+import Spinner from "./Spinner"
 
 export function TranscribeButton(props){
     const { isModelLoading, isTranscribing, onClick, ...buttonProps } = props;
