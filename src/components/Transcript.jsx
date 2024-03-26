@@ -16,6 +16,7 @@ function Transcript({ transcribedData }) {
   const exportTXT = () => {
 	let chunks = transcribedData?.chunks ?? [];
 	let text = chunks
+	console.log(text)
   	.map((chunk) => chunk.text)
   	.join("")
   	.trim();
