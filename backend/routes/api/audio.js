@@ -16,8 +16,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Route to handle file uploads
-app.post('/upload', upload.single('file'), async (req, res) => {
+
+router.post('/upload', upload.single('file'), async (req, res) => {
     if (!req.file) {
       return res.status(400).send('No file uploaded.');
     }
