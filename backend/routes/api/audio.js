@@ -14,28 +14,45 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`); 
   },
 });
-const upload = multer({ storage });
+const upload = multer({ storage:storage });
+
+router.get('/upload', (req, res) => res.send('audio Route'));
 
 
-router.post('/upload', upload.single('file'), async (req, res) => {
-    if (!req.file) {
-      return res.status(400).send('No file uploaded.');
-    }
+// router.post('/upload', upload.single('file'), async (req, res) => {
   
-    const filePath = path.join(__dirname, 'uploads', req.file.filename);
-    const outputPath = path.join(__dirname, 'uploads', `${path.parse(req.file.filename).name}.wav`);
+//     if (!req.file) {
+//       return res.status(400).send('No file uploaded.');
+//     }
   
-    try {
-      // Convert WebM to WAV
-      await convertToWAV(filePath, outputPath);
-      console.log('File converted to WAV successfully!');
+//     const filePath = path.join(__dirname, 'uploads', req.file.filename);
+//     const outputPath = path.join(__dirname, 'uploads', `${path.parse(req.file.filename).name}.wav`);
   
-      res.send('File uploaded and converted successfully!');
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error converting file.');
-    }
-  });
+//     try {
+//       // Convert WebM to WAV
+//       await convertToWAV(filePath, outputPath);
+//       console.log('File converted to WAV successfully!');
+  
+//       res.send('File uploaded and converted successfully!');
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send('Error converting file.');
+//     }
+//   });
+router.post('/upload', upload.single('file'), (req, res) => {
+  const webmFilePath = req.file.path;
+  const wavFilePath = `uploads/${req.file.originalname.replace('.webm', '.wav')}`;
+
+  ffmpeg()
+    .input(webmFilePath)
+    .outputOptions('-acodec pcm_s16le')
+    .audioCodec('pcm_s16le')
+    .on('end', () => {
+      fs.unlinkSync(webmFilePath); // Delete the original WebM file
+      res.status(200).send('Conversion complete');
+    })
+    .save(wavFilePath);
+});
 
   function convertToWAV(inputPath, outputPath) {
     return new Promise((resolve, reject) => {

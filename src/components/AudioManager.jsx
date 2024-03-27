@@ -163,11 +163,12 @@ export function AudioManager(props = { transcriber}) {
     // };
 
     const setAudioFromRecording = async (data) => {
+        //const { uploadAudio } = useAuth()
         console.log(data)
         resetAudio();
         setProgress(0);
         const blobUrl = URL.createObjectURL(data);
-        console.log(blobUrl)
+        //uploadAudio(blobUrl)
         const fileReader = new FileReader();
         fileReader.onprogress = (event) => {
             setProgress(event.loaded / event.total || 0);
