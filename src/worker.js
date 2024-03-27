@@ -162,8 +162,8 @@ const transcribe = async (
         task: subtask,
 
         // Return timestamps
-        return_timestamps: true,
-        force_full_sequences: false,
+        return_timestamps: false,
+        force_full_sequences: true,
 
         // Callback functions
         callback_function: callback_function, // after each generation step

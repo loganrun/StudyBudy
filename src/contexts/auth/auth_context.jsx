@@ -79,12 +79,30 @@ export function UserProvider({children}) {
         setUserImage(null)
     }
 
+    const uploadAudio = async(Blob) =>{
+
+            const formData = new FormData();
+            formData.append('file', Blob);
+          
+            try {
+              const response = await axios.post('/api/audio/upload', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              });
+              console.log(response.data); 
+            } catch (error) {
+              console.error(error);
+            }
+      }
+
     const value = useMemo(
         () => ({
             cookies,
             login,
             signUp,
-            logout
+            logout,
+            uploadAudio
         }),
         [cookies])
   return (

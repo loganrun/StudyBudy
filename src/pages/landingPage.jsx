@@ -1,8 +1,28 @@
-import React from 'react'
+import boy from'../assets/images/boy1.jpg'
+import { Link } from 'react-router-dom'
 
 function landingPage() {
   return (
-    <div>landingPage</div>
+    <div className="relative h-screen">
+    <img
+      src={boy}
+      alt="Background Image"
+      className="w-full h-full object-cover"
+    />
+    <div
+      className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center flex-col"
+    >
+      <h1 className="text-4xl font-bold text-white mb-6">Study Budy</h1>
+      
+  
+      <Link to='/signup'
+        className="px-6 py-3 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-colors duration-300"
+      >
+        Enter 
+      </Link>
+      
+    </div>
+  </div>
   )
 }
 

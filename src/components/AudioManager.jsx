@@ -3,11 +3,12 @@ import axios from "axios";
 import Modal from "./modal/Modal";
 import { UrlInput } from "./modal/Urlinput";
 import AudioPlayer from "./AudioPlayer";
-import { TranscribeButton } from "./TranscribeButton";
+//import { TranscribeButton } from "./TranscribeButton";
 import Constants from "../utils/Constants";
 //import { Transcriber } from "../hooks/useTranscriber";
-import Progress from "./Progress";
+//import Progress from "./Progress";
 import AudioRecorder from "./AudioRecorder";
+import { useAuth } from "../contexts/auth/auth_context";
 
 function titleCase(str) {
     str = str.toLowerCase();
@@ -135,30 +136,31 @@ export function AudioManager(props = { transcriber}) {
     const [audioDownloadUrl, setAudioDownloadUrl] = useState(undefined);
 
     const isAudioLoading = progress !== undefined;
+   
 
     const resetAudio = () => {
         setAudioData(undefined);
         setAudioDownloadUrl(undefined);
     };
 
-    const setAudioFromDownload = async (
-        data,
-        mimeType,
-    ) => {
-        const audioCTX = new AudioContext({
-            sampleRate: Constants.SAMPLING_RATE,
-        });
-        const blobUrl = URL.createObjectURL(
-            new Blob([data], { type: "audio/*" }),
-        );
-        const decoded = await audioCTX.decodeAudioData(data);
-        setAudioData({
-            buffer: decoded,
-            url: blobUrl,
-            source: AudioSource.URL,
-            mimeType: mimeType,
-        });
-    };
+    // const setAudioFromDownload = async (
+    //     data,
+    //     mimeType,
+    // ) => {
+    //     const audioCTX = new AudioContext({
+    //         sampleRate: Constants.SAMPLING_RATE,
+    //     });
+    //     const blobUrl = URL.createObjectURL(
+    //         new Blob([data], { type: "audio/*" }),
+    //     );
+    //     const decoded = await audioCTX.decodeAudioData(data);
+    //     setAudioData({
+    //         buffer: decoded,
+    //         url: blobUrl,
+    //         source: AudioSource.URL,
+    //         mimeType: mimeType,
+    //     });
+    // };
 
     const setAudioFromRecording = async (data) => {
         console.log(data)
@@ -231,7 +233,7 @@ export function AudioManager(props = { transcriber}) {
                 <div className='flex flex-row space-x-2 py-2 w-full px-2'>
                     {navigator.mediaDevices && (
                         <>
-                            <VerticalBar />
+                            {/* <VerticalBar /> */}
                             <RecordTile
                                 icon={<MicrophoneIcon />}
                                 text={"Record"}
@@ -243,20 +245,20 @@ export function AudioManager(props = { transcriber}) {
                         </>
                     )}
                 </div>
-                {
+                {/* {
                     <AudioDataBar
                         progress={isAudioLoading ? progress : +!!audioData}
                     />
-                }
+                } */}
             </div>
             {audioData && (
                 <>
-                    <AudioPlayer
+                    {/* <AudioPlayer
                         audioUrl={audioData.url}
                         mimeType={audioData.mimeType}
-                    />
+                    /> */}
 
-                    <div className='relative w-full flex justify-center items-center'>
+                    {/* <div className='relative w-full flex justify-center items-center'>
                         <TranscribeButton
                             onClick={() => {
                                 props.transcriber.start(audioData.buffer);
@@ -271,8 +273,8 @@ export function AudioManager(props = { transcriber}) {
                             transcriber={props.transcriber}
                             icon={<SettingsIcon />}
                         />
-                    </div>
-                    {props.transcriber.progressItems.length > 0 && (
+                    </div> */}
+                    {/* {props.transcriber.progressItems.length > 0 && (
                         <div className='relative z-10 p-4 w-full'>
                             <label>
                                 Loading model files... (only run once)
@@ -286,7 +288,7 @@ export function AudioManager(props = { transcriber}) {
                                 </div>
                             ))}
                         </div>
-                    )}
+                    )} */}
                 </>
             )}
         </>
@@ -451,44 +453,44 @@ function VerticalBar() {
     return <div className='w-[1px] bg-slate-200'></div>;
 }
 
-function AudioDataBar(props) {
-    return <ProgressBar progress={`${Math.round(props.progress * 100)}%`} />;
-}
+// function AudioDataBar(props) {
+//     return <ProgressBar progress={`${Math.round(props.progress * 100)}%`} />;
+// }
 
-function ProgressBar(props) {
-    return (
-        <div className='w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700'>
-            <div
-                className='bg-blue-600 h-1 rounded-full transition-all duration-100'
-                style={{ width: props.progress }}
-            ></div>
-        </div>
-    );
-}
+// function ProgressBar(props) {
+//     return (
+//         <div className='w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700'>
+//             <div
+//                 className='bg-blue-600 h-1 rounded-full transition-all duration-100'
+//                 style={{ width: props.progress }}
+//             ></div>
+//         </div>
+//     );
+// }
 
-function UrlTile(props) {
-    const [showModal, setShowModal] = useState(false);
+// function UrlTile(props) {
+//     const [showModal, setShowModal] = useState(false);
 
-    const onClick = () => {
-        setShowModal(true);
-    };
+//     const onClick = () => {
+//         setShowModal(true);
+//     };
 
-    const onClose = () => {
-        setShowModal(false);
-    };
+//     const onClose = () => {
+//         setShowModal(false);
+//     };
 
-    const onSubmit = (url) => {
-        props.onUrlUpdate(url);
-        onClose();
-    };
+//     const onSubmit = (url) => {
+//         props.onUrlUpdate(url);
+//         onClose();
+//     };
 
-    return (
-        <>
-            <Tile icon={props.icon} text={props.text} onClick={onClick} />
-            <UrlModal show={showModal} onSubmit={onSubmit} onClose={onClose} />
-        </>
-    );
-}
+//     return (
+//         <>
+//             <Tile icon={props.icon} text={props.text} onClick={onClick} />
+//             <UrlModal show={showModal} onSubmit={onSubmit} onClose={onClose} />
+//         </>
+//     );
+// }
 
 function UrlModal(props) {
     const [url, setUrl] = useState(Constants.DEFAULT_AUDIO_URL);
@@ -595,6 +597,7 @@ function RecordTile(props) {
 
 function RecordModal(props) {
     const [audioBlob, setAudioBlob] = useState();
+    const { uploadAudio } = useAuth()
 
     const onRecordingComplete = (blob) => {
         setAudioBlob(blob);
@@ -602,6 +605,7 @@ function RecordModal(props) {
 
     const onSubmit = () => {
         props.onSubmit(audioBlob);
+        uploadAudio(audioBlob)
         setAudioBlob(undefined);
     };
 
@@ -621,7 +625,7 @@ function RecordModal(props) {
                 </>
             }
             onClose={onClose}
-            submitText={"Load"}
+            submitText={"Save"}
             submitEnabled={audioBlob !== undefined}
             onSubmit={onSubmit}
         />

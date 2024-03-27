@@ -1,7 +1,16 @@
 import { useState, useEffect, useRef } from "react";
-
+import {MediaRecorder, register} from 'extendable-media-recorder'
+import {connect} from 'extendable-media-recorder-wav-encoder'
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 import { webmFixDuration } from "../utils/BlobFix";
+
+
+
+async function connectAndRegister(){
+    await register(await connect())
+}
+
+connectAndRegister()
 
 function getMimeType() {
     const types = [
@@ -53,7 +62,7 @@ export default function AudioRecorder(props) {
             mediaRecorder.addEventListener("dataavailable", async (event) => {
                 if (event.data.size > 0) {
                     chunksRef.current.push(event.data);
-                    console.log(event.data)
+                    //console.log(event.data)
                 }
                 if (mediaRecorder.state === "inactive") {
                     const duration = Date.now() - startTime;
