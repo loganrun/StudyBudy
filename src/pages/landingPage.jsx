@@ -1,5 +1,6 @@
 import boy from'../assets/images/boy1.jpg'
 import { Link } from 'react-router-dom'
+import './landing.css'
 
 function landingPage() {
   return (

@@ -8,22 +8,22 @@ export function AudioProvider({children}) {
 
 const uploadAudio = async(Blob) =>{
 
-  console.log(Blob)
-  console.log("click")
+//   console.log(Blob)
+//   console.log("click")
 
-      // const formData = new FormData();
-      // formData.append('file', Blob);
+      const formData = new FormData();
+      formData.append('file', Blob);
     
-      // try {
-      //   const response = await axios.post('/api/audio', formData, {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //     },
-      //   });
-      //   console.log(response.data); 
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      try {
+        const response = await axios.post('/api/audio/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log(response.data); 
+      } catch (error) {
+        console.error(error);
+      }
 }
 
 const value = useMemo(

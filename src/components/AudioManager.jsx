@@ -134,7 +134,7 @@ export function AudioManager(props = { transcriber}) {
     const [progress, setProgress] = useState(undefined);
     const [audioData, setAudioData] = useState(undefined);
     const [audioDownloadUrl, setAudioDownloadUrl] = useState(undefined);
-
+    const { uploadAudio } = useAuth()
     const isAudioLoading = progress !== undefined;
    
 
@@ -186,9 +186,15 @@ export function AudioManager(props = { transcriber}) {
                 source: AudioSource.RECORDING,
                 mimeType: data.type,
             });
+            console.log(audioData)
         };
         fileReader.readAsArrayBuffer(data);
     };
+    // useEffect(()=>{
+        
+    // uploadAudio(audioData)
+
+    // },[audioData])
 
     const downloadAudioFromUrl = async (
         requestAbortController) => {
@@ -598,7 +604,7 @@ function RecordTile(props) {
 
 function RecordModal(props) {
     const [audioBlob, setAudioBlob] = useState();
-    const { uploadAudio } = useAuth()
+   const { uploadAudio } = useAuth()
 
     const onRecordingComplete = (blob) => {
         setAudioBlob(blob);
@@ -606,7 +612,7 @@ function RecordModal(props) {
 
     const onSubmit = () => {
         props.onSubmit(audioBlob);
-        uploadAudio(audioBlob)
+       uploadAudio(audioBlob)
         setAudioBlob(undefined);
     };
 
