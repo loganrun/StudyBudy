@@ -20,6 +20,7 @@ const Lectures = require('../../models/Lectures')
 router.get('/upload', (req, res) => res.send('audio Route'));
 
 router.post("/upload", async(req,res) =>{
+  console.log(req.body)
   const {subject, audio, transcript} = req.body
   const lecture = new Lectures({
     subject,
