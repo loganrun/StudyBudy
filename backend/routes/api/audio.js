@@ -51,7 +51,17 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage:storage });
 
-router.get('/upload', (req, res) => res.send('audio Route'));
+
+router.get('/upload',async (req, res) => {
+  try {
+    const items = await Lectures.find()
+    res.json(items)
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).json({ message: 'Error fetching items' });
+  }
+});
+
 
 router.post("/upload",upload.single('file'), async(req,res) =>{
   try {

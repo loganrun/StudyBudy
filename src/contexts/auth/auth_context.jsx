@@ -9,17 +9,8 @@ const AppContext = createContext()
 export function UserProvider({children}) {
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const [convertBlob, setConvertBlob] = useState(null)
+    const [lectures, setLectures] =useState(null)
     
-    // const [userId, setUserId] = useState(cookies.userId)
-    // const [userName, setUserName] = useState(cookies.userName)
-    // const [userEmail, setUserEmail] = useState(cookies.userEmail)
-    // const [userPhone, setUserPhone] = useState(cookies.userPhone)
-    // const [userAddress, setUserAddress] = useState(cookies.userAddress)
-    // const [userCity, setUserCity] = useState(cookies.userCity)
-    // const [userState, setUserState] = useState(cookies.userState)
-    // const [userZip, setUserZip] = useState(cookies.userZip)
-    // const [userCountry, setUserCountry] = useState(cookies.userCountry)
-    // const [userImage, setUserImage] = useState(cookies.userImage)
 
     const login = async(formData)=>{
 
@@ -36,6 +27,7 @@ export function UserProvider({children}) {
             setCookie('token', response.data.token)
     
         } catch (error) {
+            console.log(error)
             
         }
     
@@ -56,7 +48,7 @@ export function UserProvider({children}) {
                 }
             })
     
-            setCookie('token', response.data.token)
+            
     
         } catch (error) {
             
@@ -80,30 +72,46 @@ export function UserProvider({children}) {
         setUserImage(null)
     }
 
+    const getLectures = async()=>{
+        try {
+            let response = await axios({
+                method: "get",
+                url: "http://localhost:3000/api/audio/upload",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${cookies.token}`
+                }
+                
+            })
+    }catch(error){
+        console.error(error.message)
+    }
+}
+
     function convertWebMToWAV(blobData){
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = async () => {
-          const arrayBuffer = reader.result;
-          const audioContext = new AudioContext();
-          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        const arrayBuffer = reader.result;
+        const audioContext = new AudioContext();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
     
-          const wavBuffer = audioContext.createBuffer(
+        const wavBuffer = audioContext.createBuffer(
             1,
             audioBuffer.length,
             audioBuffer.sampleRate
-          );
+        );
     
-          const channelData = wavBuffer.getChannelData(0);
-          channelData.set(audioBuffer.getChannelData(0));
+        const channelData = wavBuffer.getChannelData(0);
+        channelData.set(audioBuffer.getChannelData(0));
     
-          const wavData = wavBuffer.getChannelData(0);
-          resolve(wavData);
+        const wavData = wavBuffer.getChannelData(0);
+        resolve(wavData);
         };
         reader.onerror = reject;
         reader.readAsArrayBuffer(blobData);
-      });
-      
+    });
+ 
     };
 
 
@@ -123,104 +131,7 @@ export function UserProvider({children}) {
   const formData = new FormData();
    formData.append('file', new Blob([wavData]), fileName);
  console.log(formData)
-//   try {
-//     const response = await axios.post('/api/audio/upload', formData, {
-        
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//     });
-//     console.log(response.data); // Handle the response from the server
-//   } catch (error) {
-//     console.error(error);
-//   }
-  
-//   const convertWebMToWAV = (blobData) => {
-//     return new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-//       reader.onload = async () => {
-//         const arrayBuffer = reader.result;
-//         const audioContext = new AudioContext();
-//         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-  
-//         const wavBuffer = audioContext.createBuffer(
-//           1,
-//           audioBuffer.length,
-//           audioBuffer.sampleRate
-//         );
-  
-//         const channelData = wavBuffer.getChannelData(0);
-//         channelData.set(audioBuffer.getChannelData(0));
-  
-//         const wavData = wavBuffer.getChannelData(0);
-//         resolve(wavData);
-//       };
-//       reader.onerror = reject;
-//       reader.readAsArrayBuffer(blobData);
-//     });
-//   };
-  
-//   const generateFileName = (extension) => {
-//     const timestamp = Date.now();
-//     const randomString = Math.random().toString(36).substring(2, 8);
-//     return `${timestamp}-${randomString}.${extension}`;
-//   };
-//         const blob = new Blob([data], { type: 'audio/webm' });
-//         const reader = new FileReader();
-//   reader.readAsArrayBuffer(blob);
 
-//   reader.onload = async (event) => {
-//     const buffer = event.target.result;
-//     const file = new File([buffer], 'filename.webm', { type: 'audio/webm' });
-// console.log(file)
-//     const formData = new FormData();
-//     formData.append('audioFile', file); 
-//     console.log(formData)
-
-//     try {
-//         const response = await axios.post('/api/audio/upload', formData, {
-//                  headers: {
-//                    'Content-Type': 'multipart/form-data',
-//                  },
-//                });
-//         const data = response.data; // Access data directly from response object
-//         console.log('Upload successful!', data);
-//       } catch (error) {
-//         console.error('Upload error:', error);
-//       }
- // };
-        // const wavBlob = await convertWebMToWAV(Blob);
-
-        // const file = new File([wavBlob], `${fileName.split('.')[0]}.wav`, { type: 'audio/wav' });
-      
-        // const formData = new FormData();
-        // formData.append('file', file);
-      
-        // try {
-        //   const response = await axios.post('/upload', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   });
-        //   console.log(response.data); 
-        // } catch (error) {
-        //   console.error(error);
-        // }
-
-            // const formData = new FormData();
-            // formData.append('file', Blob);
-            // console.log(Blob)
-          
-            // try {
-            //   const response = await axios.post('/api/audio/upload', formData, {
-            //     headers: {
-            //       'Content-Type': 'multipart/form-data',
-            //     },
-            //   });
-            //   console.log(response.data); 
-            // } catch (error) {
-            //   console.error(error);
-            // }
       }
 
     const value = useMemo(
@@ -229,7 +140,9 @@ export function UserProvider({children}) {
             login,
             signUp,
             logout,
-            uploadAudio
+            uploadAudio,
+            getLectures,
+            lectures
         }),
         [cookies])
   return (

@@ -13,12 +13,12 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path="/dashboard" element={<Dashboard/>}/>
+      
         <Route path="/" element={<LandingPage/>}/>
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path='/record' element={<Main />} />
         <Route element={<ProtectedRoutes/>}>
+        <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path='/record' element={<Main />} />
         </Route>
         
