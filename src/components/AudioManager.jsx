@@ -9,7 +9,7 @@ import Constants from "../utils/Constants";
 //import Progress from "./Progress";
 import AudioRecorder from "./AudioRecorder";
 import { useAuth } from "../contexts/auth/auth_context";
-
+import { useNavigate } from 'react-router-dom'
 function titleCase(str) {
     str = str.toLowerCase();
     return (str.match(/\w+.?/g) || [])
@@ -18,6 +18,8 @@ function titleCase(str) {
         })
         .join("");
 }
+
+
 
 // List of supported languages:
 // https://help.openai.com/en/articles/7031512-whisper-api-faq
@@ -605,6 +607,7 @@ function RecordTile(props) {
 function RecordModal(props) {
     const [audioBlob, setAudioBlob] = useState();
    const { uploadAudio } = useAuth()
+   const nav = useNavigate()
 
     const onRecordingComplete = (blob) => {
         setAudioBlob(blob);
@@ -613,7 +616,9 @@ function RecordModal(props) {
     const onSubmit = () => {
         props.onSubmit(audioBlob);
        uploadAudio(audioBlob)
+       nav('/dashboard')
         setAudioBlob(undefined);
+        
     };
 
     const onClose = () => {

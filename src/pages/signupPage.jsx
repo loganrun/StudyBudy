@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAuth } from '../contexts/auth/auth_context'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import Navbar from '../components/NavBar'
 
 function signupPage() {
 
@@ -32,6 +33,7 @@ function signupPage() {
     }
   return (
 <>
+<Navbar/>
     
     <div className="flex min-h-full flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 bg-white mt-32 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
