@@ -79,7 +79,7 @@ export function UserProvider({children}) {
                 url: "http://localhost:3000/api/audio/upload",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cookies.token}`
+                    
                 }
                 
             })
