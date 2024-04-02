@@ -1,6 +1,7 @@
 node_modules/
 .env
 # Logs
+weetime-4763db2adbbf.json
 logs
 *.log
 npm-debug.log*
