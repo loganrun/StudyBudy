@@ -123,16 +123,38 @@ export function UserProvider({children}) {
         return `${timestamp}-${randomString}.${extension}`;
       };
 
-    const uploadAudio = async(data) =>{
-    const fileName = generateFileName('wav');
-  const wavData = await convertWebMToWAV(data);
-  console.log(wavData)
+const uploadAudio = async(data) =>{
+    try {
+        const file = data
+        const formData = new FormData();
+        formData.append('file', file);
 
-  const formData = new FormData();
-   formData.append('file', new Blob([wavData]), fileName);
- console.log(formData)
+        const response = await axios.post('http:localhost:3000/api/audio/upload', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        });
 
-      }
+        console.log('File uploaded successfully:', response.data);
+    } catch (error) {
+        console.error('Error uploading file:', error);
+    }
+    // const fileName = generateFileName('wav');
+    // const wavData = await convertWebMToWAV(data);
+    // console.log(wavData)
+    // const formData = new FormData();
+    // formData.append('file', new Blob([wavData]), fileName);
+    // try {
+    //     const response = await axios.post('http:localhost:3000/api/audio/upload', formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data',
+    //         },
+    //     });
+    //     console.log(response.data); 
+    // } catch (error) {
+    //     console.error(error);
+    // }
+}
 
     const value = useMemo(
         () => ({

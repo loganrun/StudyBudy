@@ -2,45 +2,45 @@ import { useRef, useEffect } from "react";
 import { formatAudioTimestamp } from "../utils/AudioUtils";
 
 function Transcript({ transcribedData }) {
-  const divRef = useRef(null);
+const divRef = useRef(null);
 
-  const saveBlob = (blob, filename) => {
+const saveBlob = (blob, filename) => {
 	const url = URL.createObjectURL(blob);
 	const link = document.createElement("a");
 	link.href = url;
 	link.download = filename;
 	link.click();
 	URL.revokeObjectURL(url);
-  };
+};
 
-  const exportTXT = () => {
+const exportTXT = () => {
 	let chunks = transcribedData?.chunks ?? [];
 	let text = chunks
 	console.log(text)
-  	.map((chunk) => chunk.text)
-  	.join("")
-  	.trim();
+.map((chunk) => chunk.text)
+.join("")
+.trim();
 	const blob = new Blob([text], { type: "text/plain" });
 	saveBlob(blob, "transcript.txt");
-  };
+};
 
-  const exportJSON = () => {
+const exportJSON = () => {
 	let jsonData = JSON.stringify(transcribedData?.chunks ?? [], null, 2);
 	const regex = /(	"timestamp": )\\\[\\s+(\\S+)\\s+(\\S+)\\s+\\\]/gm;
 	jsonData = jsonData.replace(regex, "$1[$2 $3]");
 	const blob = new Blob([jsonData], { type: "application/json" });
     console.log(blob)
 	saveBlob(blob, "transcript.json");
-  };
+};
 
-  useEffect(() => {
+useEffect(() => {
 	if (divRef.current) {
-  	const diff = Math.abs(
-    	divRef.current.offsetHeight +
-      	divRef.current.scrollTop -
-      	divRef.current.scrollHeight
-  	);
-  	if (diff <= 64) {
+const diff = Math.abs(
+    divRef.current.offsetHeight +
+    divRef.current.scrollTop -
+    divRef.current.scrollHeight
+);
+	if (diff <= 64) {
     	divRef.current.scrollTop = divRef.current.scrollHeight;
   	}
 	}
@@ -58,7 +58,7 @@ function Transcript({ transcribedData }) {
         	className="w-full flex flex-row mb-2 bg-white rounded-lg p-4 shadow-xl shadow-black/5 ring-1 ring-slate-700/10 text-black"
       	>
         	<div className="mr-5">
-          	{formatAudioTimestamp(chunk.timestamp[0])}
+        {formatAudioTimestamp(chunk.timestamp[0])}
         	</div>
         	{chunk.text}
       	</div>
