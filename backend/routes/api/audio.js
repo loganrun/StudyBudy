@@ -20,6 +20,15 @@ const storage = new Storage({
 
 const bucketName = 'studybudy';
 
+router.get('/upload',async (req, res) => {
+  try {
+    const items = await Lectures.find()
+    res.json(items)
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.status(500).json({ message: 'Error fetching items' });
+  }
+});
 
 router.post('/upload', upload.single('file'), async (req, res) => {
  // res.send("post route")
@@ -52,19 +61,11 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     stream.end(req.file.buffer);
   } catch (error) {
     console.error('Error uploading file:', error);
-    res.status(500).send('Stream not end');
+    res.status(500).send('Stream did not end properly');
   }
- });
-
- router.get('/upload',async (req, res) => {
-   try {
-     const items = await Lectures.find()
-     res.json(items)
-   } catch (error) {
-     console.error('Error fetching items:', error);
-     res.status(500).json({ message: 'Error fetching items' });
-   }
 });
+
+ 
 
 
 

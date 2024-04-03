@@ -87,7 +87,6 @@ const uploadAudio = async(data) =>{
             signUp,
             logout,
             uploadAudio,
-            getLectures,
             lectures
         }),
         [cookies])
