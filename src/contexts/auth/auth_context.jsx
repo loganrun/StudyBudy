@@ -4,11 +4,8 @@ import axios from "axios"
 
 const AppContext = createContext()
 
-
-
 export function UserProvider({children}) {
     const [cookies, setCookie, removeCookie] = useCookies(['token'])
-    const [convertBlob, setConvertBlob] = useState(null)
     const [lectures, setLectures] =useState(null)
     
 
@@ -30,14 +27,9 @@ export function UserProvider({children}) {
             console.log(error)
             
         }
-    
-        
-    
-    
     }
     
     const signUp = async(formData)=>{
-    
         try {
             let response = await axios({
                 method: "post",
@@ -47,9 +39,7 @@ export function UserProvider({children}) {
                     "Content-Type": "application/json"
                 }
             })
-    
-            
-    
+        
         } catch (error) {
             
             
@@ -72,57 +62,6 @@ export function UserProvider({children}) {
         setUserImage(null)
     }
 
-    const getLectures = async()=>{
-        try {
-            let response = await axios({
-                method: "get",
-                url: "http://localhost:3000/api/audio/upload",
-                headers: {
-                    "Content-Type": "application/json",
-                    
-                }
-                
-            })
-    }catch(error){
-        console.error(error.message)
-    }
-}
-
-    function convertWebMToWAV(blobData){
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = async () => {
-        const arrayBuffer = reader.result;
-        const audioContext = new AudioContext();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    
-        const wavBuffer = audioContext.createBuffer(
-            1,
-            audioBuffer.length,
-            audioBuffer.sampleRate
-        );
-    
-        const channelData = wavBuffer.getChannelData(0);
-        channelData.set(audioBuffer.getChannelData(0));
-    
-        const wavData = wavBuffer.getChannelData(0);
-        resolve(wavData);
-        };
-        reader.onerror = reject;
-        reader.readAsArrayBuffer(blobData);
-    });
- 
-    };
-
-
-    
-
-    const generateFileName = (extension) => {
-        const timestamp = Date.now();
-        const randomString = Math.random().toString(36).substring(2, 8);
-        return `${timestamp}-${randomString}.${extension}`;
-      };
-
 const uploadAudio = async(data) =>{
     try {
         const file = data
@@ -139,21 +78,6 @@ const uploadAudio = async(data) =>{
     } catch (error) {
         console.error('Error uploading file:', error);
     }
-    // const fileName = generateFileName('wav');
-    // const wavData = await convertWebMToWAV(data);
-    // console.log(wavData)
-    // const formData = new FormData();
-    // formData.append('file', new Blob([wavData]), fileName);
-    // try {
-    //     const response = await axios.post('http:localhost:3000/api/audio/upload', formData, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data',
-    //         },
-    //     });
-    //     console.log(response.data); 
-    // } catch (error) {
-    //     console.error(error);
-    // }
 }
 
     const value = useMemo(

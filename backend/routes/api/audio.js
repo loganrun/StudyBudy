@@ -67,23 +67,5 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 });
 
 
-// router.post("/upload",upload.single('file'), async(req,res) =>{
-//   try {
-//     const blobData = req.file.buffer;
-//     const wavBuffer = await convertBlobToWav(blobData);
-//     const lecture = new Lectures({
-//       subject: req.body.subject,
-//       audio: wavBuffer,
-//       transcript: req.body.transcript
-//     })
-//     await lecture.save()
-//     res.json(req.file)
-//   } catch (error) {
-//     console.error(error.message)
-//     res.status(500).send('send error')
-//   }
-// })
-
-
 
 module.exports = router;
