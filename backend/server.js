@@ -1,28 +1,35 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const cors = require('cors')
-require('dotenv').config();
+import express from 'express';
+import connectDB from './config/db.js'; // Assuming db.js is an ESM module
+import cors from 'cors';
+import dotenv from 'dotenv';
 
-//Initialize our app variable with Express
+dotenv.config();
+
+// Initialize our app variable with Express
 const app = express();
 
-//Connect Database
+// Connect Database
 connectDB();
 
 // Initialize middleware
 app.use(express.json({ extended: false }));
-app.use(cors())
+app.use(cors());
 
-//Single endpoint just to test API. Send data to browser
- app.get('/', (req, res) => res.send('API Running'))
+// Single endpoint just to test API. Send data to browser
+app.get('/', (req, res) => res.send('API Running'));
 
-//Define Routes
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/audio', require('./routes/api/audio'))
+// Define Routes
+import usersRouter from './routes/api/users.js'; // Assuming users.js is an ESM module
+import authRouter from './routes/api/auth.js'; // Assuming auth.js is an ESM module
+import audioRouter from './routes/api/audio.js'; // Assuming audio.js is an ESM module
+
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/audio', audioRouter);
 
 // Enviromental Variables
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
 
