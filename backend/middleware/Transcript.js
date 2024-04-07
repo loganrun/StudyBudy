@@ -1,14 +1,35 @@
 import { pipeline } from '@xenova/transformers';
 import wavefile from 'wavefile';
+import ffmpeg from 'fluent-ffmpeg';
+import ffmpegStatic from 'ffmpeg-static';
 
+ffmpeg.setFfmpegPath(ffmpegStatic);
 
+async function bufferConvert(buffer){
+    ffmpeg()
+    .input(buffer)
+    .outputFormat('wav')
+    ffmpeg.run((err, buffer) => {
+        if  (err){ 
+        console.log("Error converting buffer to wav" , err);
+        } else {
+        console.log('conversion successful');
+        return buffer
+        }
+    });
+
+}
 let transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en');
 
 export default async function transcript(url) {
 
     let buffer = Buffer.from(await fetch(url).then(x => x.arrayBuffer()))
-    console.log(buffer);
-    let wav = new wavefile.WaveFile(buffer);
+    // const ffmpeg= new ffmpegNode()
+    // ffmpeg.setInput(buffer)
+    // ffmpeg.setOutputFormat('wav')
+    const newWav = await bufferConvert(buffer)
+    console.log(newWav);
+    let wav = new wavefile.WaveFile(newWav);
     wav.toSampleRate(1600)
     let audioData = wav.getSamples();
 
