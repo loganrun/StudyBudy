@@ -53,7 +53,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       const fileUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
       console.log(fileUrl)
       const newTrans = await Transcript(fileUrl)
-      //console.log(newTrans)
+      console.log(newTrans)
       res.send(`File uploaded successfully: ${fileUrl}`);
     });
 

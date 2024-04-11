@@ -1,9 +1,10 @@
-import { pipeline } from '@xenova/transformers';
-import wavefile from 'wavefile';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
 import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 ffmpeg.setFfmpegPath(ffmpegStatic);
 
@@ -36,61 +37,31 @@ async function audioConvert(file){
     .run();
 
     return(wavFilePath);
-    // .input(buffer)
-    // .outputFormat('wav')
-    // ffmpeg.run((err, buffer) => {
-    //     if  (err){ 
-    //     console.log("Error converting buffer to wav" , err);
-    //     } else {
-    //     console.log('conversion successful');
-    //     return buffer
-    //     }
-    // });
+    
 
 }
-//let transcriber = await pipeline('automatic-speech-recognition', 'Xenova/whisper-base.en');
+
+
+async function getTranscript(filename) {
+	const data = fs.readFileSync(filename);
+	const response = await fetch(
+		"https://api-inference.huggingface.co/models/facebook/wav2vec2-large-960h-lv60-self",
+		{
+			headers: { Authorization: "Bearer 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" },
+			method: "POST",
+			body: data,
+		}
+	);
+	const result = await response.json();
+	return result;
+}
 
 export default async function transcript(url) {
 
     const preConvert = await audioConvert(url);
     console.log(preConvert)
-    const postConvert = wavFilePath
-    console.log(postConvert)
+    const postConvert = await getTranscript(preConvert)
+    return(postConvert)
 
-
-    // let url = 'https://huggingface.co/datasets/Xenova/transformers.js-docs/resolve/main/jfk.wav';
-
-    // let buffer = Buffer.from(await fetch(url).then(x => x.arrayBuffer()))
-    // const ffmpeg= new ffmpegNode()
-    // ffmpeg.setInput(buffer)
-    // ffmpeg.setOutputFormat('wav')
-    //const newWav = await bufferConvert(buffer)
-    //console.log(buffer);
-    //let wav = new wavefile.WaveFile(buffer);
-    //console.log(wav)
-    // wav.toSampleRate(1600)
-    // let audioData = wav.getSamples();
-
-    // if (Array.isArray(audioData)) {
-    //     if (audioData.length > 1) {
-    //     const SCALING_FACTOR = Math.sqrt(2);
-    
-    //       // Merge channels (into first channel to save memory)
-    //     for (let i = 0; i < audioData[0].length; ++i) {
-    //         audioData[0][i] = SCALING_FACTOR * (audioData[0][i] + audioData[1][i]) / 2;
-    //     }
-    //     }
-    //     // Select first channel
-    //     audioData = audioData[0];
-    //     //console.log(audioData)
-    // }
-
-    // let start = performance.now();
-    // console.log(audioData);
-    // let output = await transcriber(audioData);
-    // let end = performance.now();
-    // console.log(`Execution duration: ${(end - start) / 1000} seconds`);
-    //console.log(output);
-    //return output;
 
 }
