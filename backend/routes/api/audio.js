@@ -51,7 +51,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     stream.on('finish', async () => {
       const fileUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
-      console.log(fileUrl)
+      //console.log(fileUrl)
       const newTrans = await Transcript(fileUrl)
       console.log(newTrans)
       res.send(`File uploaded successfully: ${fileUrl}`);

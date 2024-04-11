@@ -47,7 +47,7 @@ async function getTranscript(filename) {
 	const response = await fetch(
 		"https://api-inference.huggingface.co/models/facebook/wav2vec2-large-960h-lv60-self",
 		{
-			headers: { Authorization: "Bearer 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" },
+			headers: { Authorization: `Bearer ${process.env.Hugging_Face}` },
 			method: "POST",
 			body: data,
 		}
