@@ -78,6 +78,7 @@ async function saveToDatabase(transcript,fileUrl) {
       date: new Date().toDateString()
     });
     await lecture.save();
+    return lecture
     
   } catch (error) {
     console.error('Error saving to database:', error);
