@@ -1,16 +1,27 @@
 import mongoose from 'mongoose';
+//import { useId } from 'react';
 
 const LectureSchema = new mongoose.Schema({
   subject: {
     type: String,
-    required: true, // Assuming subject is required (add if needed)
+    
   },
-  audio: {
+  userId:{
+    type: String
+  },
+  url: {
     type: String,
   },
   transcript: {
     type: String,
   },
+  summary:{
+    type: String,
+  },
+  date:{
+    type: Date,
+    default: Date.now,
+  }
 });
 
 export default mongoose.model('lecture', LectureSchema);
