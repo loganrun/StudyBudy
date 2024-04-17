@@ -2,6 +2,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import ffmpegStatic from 'ffmpeg-static';
 import fs from 'fs';
 import path from 'path';
+import {uuid} from 'uuidv4';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -9,7 +10,8 @@ dotenv.config();
 ffmpeg.setFfmpegPath(ffmpegStatic);
 
 const outputDirPath = 'path/to/output';
-const wavFilePath = path.join(outputDirPath, 'audio.wav');
+const filename = `${uuid()}.audio.wav`
+const wavFilePath = path.join(outputDirPath, filename);
 
 // Create the output directory if it doesn't exist
 
@@ -57,11 +59,21 @@ async function getTranscript(filename) {
 }
 
 export default async function transcript(url) {
+  try {
 
     const preConvert = await audioConvert(url);
     console.log(preConvert)
     const postConvert = await getTranscript(preConvert)
+    //fs.unlink(preConvert)
     return(postConvert)
+    
+  } catch (error) {
+    console.error(error.message);
+    
+    
+  }
+
+    
 
 
 }
