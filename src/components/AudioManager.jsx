@@ -192,11 +192,6 @@ export function AudioManager(props = { transcriber}) {
         };
         fileReader.readAsArrayBuffer(data);
     };
-    // useEffect(()=>{
-        
-    // uploadAudio(audioData)
-
-    // },[audioData])
 
     const downloadAudioFromUrl = async (
         requestAbortController) => {
