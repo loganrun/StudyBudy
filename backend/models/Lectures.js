@@ -19,8 +19,7 @@ const LectureSchema = new mongoose.Schema({
     type: [{String}],
   },
   date:{
-    type: Date,
-    default: Date.now,
+    type: String,
   },
   notes:{
     type: String,

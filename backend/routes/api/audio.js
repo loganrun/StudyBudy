@@ -5,7 +5,8 @@ import path from 'path';
 import Lectures from '../../models/Lectures.js'; 
 import { Storage } from '@google-cloud/storage';
 import Transcript from '../../middleware/transcript.js';
-import Summarization from '../../middleware/summarization.js';
+import dateFormat, { masks } from "dateformat";
+//import Summarization from '../../middleware/summarization.js';
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -29,6 +30,9 @@ router.get('/upload', async (req, res) => {
 
 router.post('/upload', upload.single('file'), async (req, res) => {
   const {subject, userId} = req.body;
+  const now = Date.now();
+  const date = dateFormat(now, "mediumDate", true);
+  
   try {
     if (!req.file) {
     return res.status(400).send('No file uploaded.');
@@ -56,7 +60,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       console.log(transcript)
 
       // Save transcript and summary to the database
-      await saveToDatabase(transcript.text,fileUrl);
+      await saveToDatabase(transcript.text,fileUrl, date);
 
       res.send(`File uploaded successfully: ${fileUrl}`);
     });
@@ -69,13 +73,13 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-async function saveToDatabase(transcript,fileUrl) {
+async function saveToDatabase(transcript,fileUrl, date) {
   try {
     const lecture = new Lectures({
       subject: "Ted Talk",
       url: fileUrl,
       transcript,
-      date: new Date().toDateString()
+      date
     });
     await lecture.save();
     return lecture
