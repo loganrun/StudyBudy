@@ -1,14 +1,11 @@
 import React, {useState} from 'react'
 import AudioPlayer from './AudioPlayer';
-import DateFormatter from './DateFormatter';
+
 
 function DisplayLecture({ data}) {
     const [isOpen, setIsOpen] = useState(false);
     const {url, subject, transcript, date} = data;
-    // const formattedDate = new Date(date)
-    // const options ={ year: 'numeric', month: 'long', day: 'numeric' };
-    // const newDate = formattedDate.tolocalDateString('en-US', options)
-    // console.log(newDate)
+    
 
 
     return (
@@ -17,8 +14,8 @@ function DisplayLecture({ data}) {
             <AudioPlayer audioUrl={url}/>
         <div className="flex items-center mb-2">
             <i className="fas fa-volume-up mr-2 text-gray-500"></i> 
-            <a href={url} className="text-blue-500 hover:underline">{subject}</a>
-            <p className="text-blue-500">{date}</p>
+            <p  className="text-sky-800 text-xl font-bold">{subject}</p>
+            <p className="text-sky-800  mx-6 font-bold">{date}</p>
             <button className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Study</button>
         </div>
         <div className="border rounded-md p-4">
