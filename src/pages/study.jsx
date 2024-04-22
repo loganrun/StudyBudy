@@ -2,7 +2,7 @@ import React from 'react'
 import {useState} from 'react'
 import { useLocation } from 'react-router-dom'
 import AudioPlayer from '../components/AudioPlayer'
-import OpenAiInterface from '../components/OpenAiInterface1'
+import OpenAiInterface from '../components/OpenAiInterface'
 import Navbar from '../components/NavBar'
 
 
