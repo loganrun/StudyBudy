@@ -20,7 +20,7 @@ const OpenAIInterface = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-8">
-      <h1 className="text-2xl font-bold mb-4">Ask Your Computer Tutor</h1>
+      <h1 className="text-2xl font-bold mb-4">Ask Your Study Budy</h1>
       <textarea
         className="w-full p-4 border rounded-md mb-4"
         rows="5"

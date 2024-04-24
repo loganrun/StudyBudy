@@ -16,7 +16,7 @@ const {url, subject, transcript, date, _id} = params.state;
     <Navbar />
     <div className="container mx-auto mt-4">
     <h1 className="text-2xl font-bold mb-4">Lesson Review</h1>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 justify-center mt-20 max-w-screen-lg mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 justify-center mt-20 max-w-screen-lg mx-auto">
     
     <div className="bg-white rounded-lg shadow-md p-4" id={_id}>
             <AudioPlayer audioUrl={url}/>
