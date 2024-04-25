@@ -13,7 +13,7 @@ const openai = new OpenAI({
 
 
 router.post('/chat', async  function(req, res) {
-    const {prompt} = req.body
+    const {prompt} = req.body.data
     console.log(prompt)
 
     try {
