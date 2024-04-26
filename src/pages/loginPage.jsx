@@ -3,10 +3,13 @@ import { useAuth } from '../contexts/auth/auth_context'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/NavBar'
+import { useDispatch } from 'react-redux';
+import { loginSuccess, loginError } from '../reducers/authReducer';
 
 function loginPage() {
     const nav = useNavigate()
-    const { login } = useAuth()
+    const dispatch = useDispatch();
+    //const { login } = useAuth()
 
     const [formData, setFormData] = useState({
         email: '',
@@ -26,8 +29,18 @@ function loginPage() {
     const onSubmit = async(e) =>{
         e.preventDefault()
         //console.log(formData)
-        await login(formData)
-        nav('/dashboard')
+        try {
+            const response = await axios.post("http://localhost:3000/api/auth", formData);
+            const user = response.data; // Assuming the API returns the user object upon successful signup
+            dispatch(loginSuccess(user));
+            // await login(formData)
+            nav('/dashboard')
+            
+        } catch (error) {
+            dispatch(loginError(error.message));
+
+        }
+       
     }
   return (
     <>

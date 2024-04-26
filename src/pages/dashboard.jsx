@@ -1,33 +1,34 @@
-import {useEffect, useState} from 'react'
-import DisplayLecture from '../components/DisplayLecture'
-import Navbar from '../components/NavBar'
-import axios from 'axios'
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import DisplayLecture from '../components/DisplayLecture';
+import Navbar from '../components/NavBar';
+import { setLectures } from '../reducers/lecturesSlice';
+import axios from 'axios';
 
 
 function Dashboard() {
-    const [lectures, setLectures] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
+    const lectures = useSelector((state) => state.lectures.lectures);
+  const isLoading = useSelector((state) => state.lectures.isLoading);
+  const dispatch = useDispatch();
 
-    useEffect(()=>{
-        const findLectures = async() =>{
-            try {
-                let response = await axios({
-                    method: "get",
-                    url: "http://localhost:3000/api/audio/upload",
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                    
-                })
-                //console.log(response)
-                setLectures(response.data)
-                setIsLoading(false)
-        }catch(error){
-            console.error(error.message)
-        }
-    }
-    findLectures()
-    },[])
+  useEffect(() => {
+    const findLectures = async () => {
+      try {
+        let response = await axios({
+          method: 'get',
+          url: 'http://localhost:3000/api/audio/upload',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        //console.log(response);
+        dispatch(setLectures(response.data));
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    findLectures();
+  }, [dispatch]);
 
     
 

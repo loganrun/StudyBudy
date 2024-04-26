@@ -58,7 +58,7 @@ const {url, subject, transcript, date, _id} = params.state;
     </div>
     <textarea 
   className="h-80 overflow-y-auto resize-none border border-gray-300 rounded-md text-sky-800 text-base font-bold"
-  placeholder="Type your Notes"
+  placeholder="Add your Notes"
 ></textarea>
 {/* <div > */}
   
