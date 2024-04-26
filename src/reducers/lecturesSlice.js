@@ -13,8 +13,11 @@ const lecturesSlice = createSlice({
       state.lectures = action.payload;
       state.isLoading = false;
     },
+    updateLectures: (state, action) => {
+      state.lectures = [...state.lectures, action.payload];
+    }
   },
 });
 
-export const { setLectures } = lecturesSlice.actions;
+export const { setLectures, updateLectures } = lecturesSlice.actions;
 export default lecturesSlice.reducer;

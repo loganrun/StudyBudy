@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addMessage } from '../reducers/conversationReducer';
+
 
 const OpenAIInterface = () => {
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
+  const dispatch = useDispatch();
 
   
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     // Make API request to OpenAI with input
+    e.preventDefault()
     //console.log(input)
+    dispatch(addMessage(input));
+
     const apiResponse = await axios.post("http://localhost:3000/api/chat/chat", {
 
       headers: {
@@ -21,6 +28,7 @@ const OpenAIInterface = () => {
     });
     const data = apiResponse.data;
     console.log(data)
+    dispatch(addMessage(data.content))
     setResponse(data.content);
     setInput('')
   };
@@ -37,7 +45,7 @@ const OpenAIInterface = () => {
       <textarea
         className="w-full p-4  rounded-md mb-4  bg-[#1D1F20] "
         rows="5"
-        placeholder="Enter your text here..."
+        placeholder="Enter your question here..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
       ></textarea>

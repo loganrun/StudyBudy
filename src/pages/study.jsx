@@ -1,15 +1,45 @@
 import React from 'react'
 import {useState} from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import AudioPlayer from '../components/AudioPlayer'
 import OpenAiInterface from '../components/OpenAiInterface'
 import Navbar from '../components/NavBar'
+import ConversationThread from '../components/ConversationThread'
+import { updateLectures } from '../reducers/lecturesSlice'
+import axios from 'axios'
 
 
 function study() {
     const [isOpen, setIsOpen] = useState(false);
     const params = useLocation()
-const {url, subject, transcript, date, _id} = params.state;
+    const [newNotes, setNewNotes] = useState('')
+    const {url, subject, transcript, date, _id, notes} = params.state;
+    const dispatch = useDispatch()
+    //console.log(_id)
+    console.log(notes)
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios({
+      method: "put",
+      url: `http://localhost:3000/api/lecture/${_id}`,
+      data: {
+        notes: newNotes
+      },
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    dispatch(updateLectures(response.data))    
+
+  } catch (error) {
+    console.error(error.message)
+  }
+  
+}
 
   return (
 <>
@@ -56,64 +86,26 @@ const {url, subject, transcript, date, _id} = params.state;
     <div>     
     </div>
     </div>
-    <textarea 
-  className="h-80 overflow-y-auto resize-none border border-gray-300 rounded-md text-sky-800 text-base font-bold"
-  placeholder="Add your Notes"
-></textarea>
-{/* <div > */}
-  
-  {/* <div class="bg-gray-800 text-white p-4 w-64">
-    <div class="mb-4">
-      <h2 class="text-xl font-bold">Chat Bot</h2>
-    </div>
     <div>
-      
-    </div>
-  </div> */}
-
-  {/* <!-- Chat Window --> */}
-  {/* <div class="flex-1 flex flex-col"> */}
-    {/* <!-- Header --> */}
-    {/* <div class="bg-gray-700 text-white p-4 flex items-center justify-between">
-      <h2 class="text-lg font-bold">Conversation</h2>
-      <div>
-      </div>
-    </div> */}
-
-    {/* <!-- Chat Messages --> */}
-    {/* <div class="flex-1 h-96 overflow-y-auto p-4">
-      <div class="mb-4">
-        <div class="bg-gray-200 p-2 rounded-lg">
-          <p class="text-gray-800">Hello! How can I assist you today?</p>
-        </div>
-      </div>
-      <div class="mb-4">
-        <div class="bg-blue-500 text-white p-2 rounded-lg self-end">
-          <p>I have a question about your product features.</p>
-        </div>
-      </div>
-      <textarea 
-  class="flex-1 h-80 bg-[#17191A] overflow-y-auto resize-none border  text-sky-800 text-xl font-bold w-auto "
-  placeholder="Type your Notes"
-></textarea>
-      
-    </div> */}
-
-    {/* <!-- Input --> */}
-    {/* <div class="bg-gray-200 p-4 ">
-      <div class="flex">
-        <input
-          class="flex-1 rounded-lg p-2 mr-2"
-          type="text"
-          placeholder="Type your message..."
-        />
-        <button class="bg-blue-500 text-white rounded-lg px-4 py-2">Send</button>
-      </div>
-    </div> */}
-  {/* </div> */}
-{/* </div> */}
+    <textarea 
+      className="h-80 overflow-y-auto resize-none w-full border border-gray-300 rounded-md text-sky-800 text-base font-bold"
+      placeholder="Add your Notes"
+      value={notes}
+      onChange={(e) => setNewNotes(e.target.value)}
+    ></textarea>
+    <div>
+    <button className="bg-rose-600 text-white font-bold py-2 px-4 rounded"
+      value={newNotes}
+      onClick={handleSubmit}
+    >Save</button>
 
     </div>
+    
+
+    </div>
+    
+    </div>
+    <ConversationThread/>
     <OpenAiInterface/>
 
     </div>

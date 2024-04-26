@@ -16,7 +16,7 @@ function Dashboard() {
       try {
         let response = await axios({
           method: 'get',
-          url: 'http://localhost:3000/api/audio/upload',
+          url: 'http://localhost:3000/api/lecture/',
           headers: {
             'Content-Type': 'application/json',
           },

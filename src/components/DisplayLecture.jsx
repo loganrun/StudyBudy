@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function DisplayLecture({ data}) {
     const [isOpen, setIsOpen] = useState(false);
-    const {url, subject, transcript, date, _id} = data;
+    const {url, subject, transcript, date, _id, notes} = data;
     
     
 
@@ -20,7 +20,7 @@ function DisplayLecture({ data}) {
             <p  className="text-sky-800 text-xl font-bold">{subject}</p>
             <p className="text-sky-800  mx-6 font-bold">{date}</p>
             <Link className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            to={'/study'} state = {{url,subject,transcript, date, _id}}
+            to={'/study'} state = {{url,subject,transcript, date, _id, notes}}
             >Study</Link>
         </div>
         <div className="border rounded-md p-4">
