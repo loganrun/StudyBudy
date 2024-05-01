@@ -14,8 +14,12 @@ function DisplayLecture({ data}) {
         
         
         <div className="bg-white rounded-lg shadow-md p-4">
+            <button class="delete-btn text-black font-bold py-2 px-4 rounded" onclick="deleteCard(event)">
+                 X
+            </button>
             <AudioPlayer audioUrl={url}/>
         <div className="flex items-center mb-2">
+            
             <i className="fas fa-volume-up mr-2 text-gray-500"></i> 
             <p  className="text-sky-800 text-xl font-bold">{subject}</p>
             <p className="text-sky-800  mx-6 font-bold">{date}</p>
@@ -49,7 +53,9 @@ function DisplayLecture({ data}) {
         <p className="text-gray-700 overflow-hidden text-ellipsis">{transcript}</p>
         </div>
     )}
+    
     </div>
+    
         
 
         </div>
