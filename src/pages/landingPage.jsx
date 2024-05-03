@@ -13,7 +13,7 @@ function landingPage() {
     <div
       className="absolute inset-0 bg-black bg-opacity-10 flex items-center justify-center flex-col"
     >
-      <h1 className="text-4xl font-bold text-white mb-6">Study Budy</h1>
+      <h1 className="text-4xl font-bold text-white mb-6">Study Buddy</h1>
       
   
       <Link to='/signup'
