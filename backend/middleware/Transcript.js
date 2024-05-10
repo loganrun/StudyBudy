@@ -4,8 +4,13 @@ import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 import tmp from 'tmp';
+import OpenAI from 'openai';
 
 dotenv.config();
+
+const openai = new OpenAI({
+      apiKey: process.env.OPEN_API_KEY
+});
 
 ffmpeg.setFfmpegPath(ffmpegStatic);
 
@@ -72,17 +77,24 @@ async function audioConvert(file) {
   });
 }
 async function getTranscript(filename) {
-  const data = fs.readFileSync(filename);
-  const response = await fetch(
-    "https://api-inference.huggingface.co/models/openai/whisper-large-v3",
-    {
-      headers: { Authorization: `Bearer ${process.env.Hugging_Face}` },
-      method: "POST",
-      body: data,
-    }
-  );
-  const result = await response.json();
-  return result;
+  // const data = fs.readFileSync(filename);
+  // const response = await fetch(
+  //   "https://api-inference.huggingface.co/models/openai/whisper-large-v3",
+  //   {
+  //     headers: { Authorization: `Bearer ${process.env.Hugging_Face}` },
+  //     method: "POST",
+  //     body: data,
+  //   }
+  // );
+  // const result = await response.json();
+  const transcription = await openai.audio.transcriptions.create({
+    file: fs.createReadStream(filename),
+    model: "whisper-1",
+  });
+
+  //console.log(transcription.text);
+
+  return transcription;
 }
 
 export default async function transcript(url) {

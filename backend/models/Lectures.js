@@ -16,7 +16,7 @@ const LectureSchema = new mongoose.Schema({
     type: String,
   },
   summary:{
-    type: [{String}],
+    type: String,
   },
   date:{
     type: String,

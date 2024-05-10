@@ -1,14 +1,18 @@
 import express from 'express';
 const router = express.Router();
 import dotenv from 'dotenv';
-import OpenAI from 'openai';
+//import OpenAI from 'openai';
+import Groq from 'groq-sdk'
 
 dotenv.config();
 
-const openai = new OpenAI({
-    apiKey: process.env.OPEN_API_KEY
-});
+// const openai = new OpenAI({
+//     apiKey: process.env.OPEN_API_KEY
+// });
 
+const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY
+})
 
 
 
@@ -18,9 +22,9 @@ router.post('/chat', async  function(req, res) {
 
     try {
 
-        const response = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo-0125",
-    messages: [
+        const response = await groq.chat.completions.create({
+            model: "llama3-8b-8192",
+    "messages": [
         {
         "role": "user",
         "content": prompt

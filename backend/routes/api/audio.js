@@ -6,7 +6,7 @@ import Lectures from '../../models/Lectures.js';
 import { Storage } from '@google-cloud/storage';
 import Transcript from '../../middleware/transcript.js';
 import dateFormat, { masks } from "dateformat";
-//import Summarization from '../../middleware/summarization.js';
+import Summarization from '../../middleware/summarization.js';
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -56,11 +56,12 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     stream.on('finish', async () => {
       const fileUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
       const transcript = await Transcript(fileUrl);
-      //const summary = await Summarization(transcript.text);
+      const summary = await Summarization(transcript.text);
       console.log(transcript)
+      console.log(summary)
 
       // Save transcript and summary to the database
-      await saveToDatabase(transcript.text,fileUrl, date);
+      await saveToDatabase(transcript.text,summary.content,fileUrl, date);
 
       res.send(`File uploaded successfully: ${fileUrl}`);
     });
@@ -73,12 +74,13 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-async function saveToDatabase(transcript,fileUrl, date) {
+async function saveToDatabase(transcript,summary,fileUrl, date) {
   try {
     const lecture = new Lectures({
       subject: "Ted Talk",
       url: fileUrl,
       transcript,
+      summary,
       date
     });
     await lecture.save();

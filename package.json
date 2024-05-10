@@ -22,6 +22,7 @@
     "ffmpeg-static": "^5.2.0",
     "fix-webm-duration": "^1.0.5",
     "fluent-ffmpeg": "^2.1.2",
+    "groq-sdk": "^0.3.3",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
     "react-cookie": "^7.1.0",
