@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/NavBar'
 import { useDispatch } from 'react-redux';
 import { loginSuccess, loginError } from '../reducers/authReducer';
+import axios from 'axios'
 
 function loginPage() {
     const nav = useNavigate()
@@ -100,6 +101,7 @@ function loginPage() {
             <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={(e)=> onSubmit(e)}
             >
                 Login 
             </button>

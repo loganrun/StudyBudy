@@ -16,7 +16,7 @@ function landingPage() {
       <h1 className="text-4xl font-bold text-white mb-6">Study Buddy</h1>
       
   
-      <Link to='/signup'
+      <Link to='/login'
         className="px-6 py-3 bg-white text-black font-bold rounded-md hover:bg-gray-200 transition-colors duration-300"
       >
         Enter 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/NavBar'
 import { useDispatch } from 'react-redux';
 import { signupSuccess, signupError } from '../reducers/signupReducer'
+import axios from 'axios'
 function signupPage() {
 
     const nav = useNavigate()
@@ -25,6 +26,7 @@ function signupPage() {
            
         })
         
+        console.log(formData)
     }
 
     const onSubmit = async(e) =>{
@@ -32,10 +34,11 @@ function signupPage() {
         try {
             const response = await axios.post("http://localhost:3000/api/users", formData);
             const user = response.data; // Assuming the API returns the user object upon successful signup
+            console.log(user)
             dispatch(signupSuccess(user));
             //console.log(formData)
         // await signUp(formData)
-        nav('/record')
+        nav('/dashboard')
             
         } catch (error) {
             dispatch(signupError(error.message));
@@ -112,6 +115,7 @@ function signupPage() {
             <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={(e)=> onSubmit(e)}
             >
                 Sign Up
             </button>
