@@ -1,5 +1,5 @@
 import { AudioManager } from "../components/AudioManager";
-import Transcript from "../components/Transcript";
+//import Transcript from "../components/Transcript";
 import { useTranscriber } from "../hooks/use.Transcriber";
 import Navbar from "../components/NavBar";
 
