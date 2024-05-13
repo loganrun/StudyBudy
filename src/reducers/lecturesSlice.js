@@ -15,9 +15,12 @@ const lecturesSlice = createSlice({
     },
     updateLectures: (state, action) => {
       state.lectures = [...state.lectures, action.payload];
+    },
+    deleteLecture: (state, action) => {
+      state.lectures = state.lectures.filter(lecture => lecture._id !== action.payload);
     }
   },
 });
 
-export const { setLectures, updateLectures } = lecturesSlice.actions;
+export const { setLectures, updateLectures, deleteLecture } = lecturesSlice.actions;
 export default lecturesSlice.reducer;
