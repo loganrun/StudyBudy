@@ -1,10 +1,12 @@
-import { Outlet } from "react-router-dom"
-import {useAuth} from '../../contexts/auth/auth_context'
+import { Navigate,Outlet } from "react-router-dom"
+//import {useAuth} from '../../contexts/auth/auth_context'
+import { useSelector } from "react-redux"
 
 function ProtectedRoutes() {
+  const user = useSelector(state => state.auth.user)
 
-    const {cookies} = useAuth()
-  return cookies.token ? <Outlet/> : <h1>Please Login to View</h1>
+    //const {cookies} = useAuth()
+  return user ? <Outlet/> : <Navigate to ='/login' />
 }
 
 export default ProtectedRoutes
