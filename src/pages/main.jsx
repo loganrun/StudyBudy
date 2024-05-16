@@ -11,6 +11,7 @@ return (
      <Navbar/>
     <div className='flex  min-h-screen'>
         <div className='container flex flex-col  items-center'>
+            
             {/* <h1 className='text-5xl font-extrabold tracking-tight text-white sm:text-7xl '>
                 Study Budy
             </h1> */}
