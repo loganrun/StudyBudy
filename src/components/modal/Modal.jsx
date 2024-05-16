@@ -74,6 +74,22 @@ export default function Modal({
                                     >
                                         Close
                                     </button>
+                                    <input
+                                        id="subject"
+                                        name="subject"
+                                        type="text"
+                                        placeholder="Subject"
+                                        
+                                        onChange={(e) =>{onChange(e)}}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        />
+                                    {/* <button
+                                        type='button'
+                                        className='inline-flex justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm  mr-1 font-medium text-white hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 transition-all duration-300'
+                                        onClick={onClose}
+                                    >
+                                        Add Subject
+                                    </button> */}
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
