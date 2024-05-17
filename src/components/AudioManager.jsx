@@ -390,6 +390,7 @@ function RecordTile(props) {
                 show={showModal}
                 onSubmit={onSubmit}
                 onClose={onClose}
+                
             />
         </>
     );
@@ -398,6 +399,7 @@ function RecordTile(props) {
 function RecordModal(props) {
     const [audioBlob, setAudioBlob] = useState();
     const [alertMessage, setAlertMessage] = useState('');
+    const [subject, setSubject] = useState('')
    const { uploadAudio } = useAuth()
    const nav = useNavigate()
 
@@ -432,6 +434,18 @@ function RecordModal(props) {
         
     };
 
+    const onChange = (e) =>{
+        console.log(e)
+        setSubject({
+           ...subject,
+
+            [e.target.name]: e.target.value
+           
+        })
+        console.log(subject)
+    }
+
+
     const onClose = () => {
         props.onClose();
         setAudioBlob(undefined);
@@ -452,6 +466,8 @@ function RecordModal(props) {
             submitText={"Save"}
             submitEnabled={audioBlob !== undefined}
             onSubmit={onSubmit}
+            onChange={onChange}
+            
         />
         <Alert message={alertMessage} />
         </>

@@ -8,7 +8,7 @@ const transcriber = useTranscriber();
 
 return (
     <>
-     <Navbar/>
+     <Navbar id="record"/>
     <div className='flex  min-h-screen'>
         <div className='container flex flex-col  items-center'>
             

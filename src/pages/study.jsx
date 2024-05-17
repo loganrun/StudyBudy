@@ -12,9 +12,10 @@ import axios from 'axios'
 
 function study() {
     const [isOpen, setIsOpen] = useState(false);
+    const [summaryIsOpen, setsummaryIsOpen] = useState(false);
     const params = useLocation()
     const [newNotes, setNewNotes] = useState('')
-    const {url, subject, transcript, date, _id, notes} = params.state;
+    const {url, subject, transcript, date, _id, notes, summary} = params.state;
     const dispatch = useDispatch()
     //console.log(_id)
     console.log(notes)
@@ -43,7 +44,7 @@ const handleSubmit = async (e) => {
 
   return (
 <>
-    <Navbar />
+    <Navbar id = "study" />
     <div className="container mx-auto mt-4">
     <h1 className="text-2xl font-bold mb-4">Lesson Review</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 justify-center mt-20 max-w-screen-lg mx-auto">
@@ -83,6 +84,34 @@ const handleSubmit = async (e) => {
         </div>
     )}
     </div>
+    <div className=" rounded-md p-4">
+                <button
+                    className="flex justify-between items-center w-full py-2 px-4 bg-rose-600 rounded-md  focus:outline-none"
+                    onClick={() => setsummaryIsOpen(!summaryIsOpen)}
+                >
+                    <span className="text-lg font-semibold">Summary</span>
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-6 w-6 transition-transform transform ${summaryIsOpen ? 'rotate-180' : 'rotate-0'}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d={summaryIsOpen ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
+                    />
+                    </svg>
+                </button>
+                    {summaryIsOpen && (
+                        <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+                        <p className="text-gray-700 overflow-hidden text-ellipsis">{summary}</p>
+                        </div>
+                    )}
+        
+            </div>
     <div>     
     </div>
     </div>

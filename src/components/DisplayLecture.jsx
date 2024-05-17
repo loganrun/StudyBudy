@@ -9,7 +9,8 @@ import { useDispatch } from'react-redux';
 
 function DisplayLecture({ data}) {
     const [isOpen, setIsOpen] = useState(false);
-    const {url, subject, transcript, date, _id, notes} = data;
+    const [summaryIsOpen, setsummaryIsOpen] = useState(false);
+    const {url, subject, transcript, date, _id, notes,summary} = data;
     const [showModal, setShowModal] = useState(false);
     const [showDeleteButton, setShowDeleteButton] = useState(false);
     const dispatch = useDispatch()
@@ -87,7 +88,7 @@ function DisplayLecture({ data}) {
                 </div>
             )}
 
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-white rounded-lg  p-4">
             <AudioPlayer audioUrl={url}/>
             <div className="flex items-center mb-2">
                     
@@ -95,12 +96,12 @@ function DisplayLecture({ data}) {
                     <p  className="text-sky-800 text-xl font-bold">{subject}</p>
                     <p className="text-sky-800  mx-6 font-bold">{date}</p>
                     <Link className="bg-sky-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    to={'/study'} state = {{url,subject,transcript, date, _id, notes}}
+                    to={'/study'} state = {{url,subject,transcript, date, _id, notes, summary}}
                     >Study</Link>
             </div>
-            <div className="border rounded-md p-4">
+            <div className=" rounded-md p-4">
                 <button
-                    className="flex justify-between items-center w-full py-2 px-4 bg-rose-600 rounded-md mb-4 focus:outline-none"
+                    className="flex justify-between items-center w-full py-2 px-4 bg-rose-600 rounded-md  focus:outline-none"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     <span className="text-lg font-semibold">Lecture Transcript</span>
@@ -122,6 +123,34 @@ function DisplayLecture({ data}) {
                     {isOpen && (
                         <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
                         <p className="text-gray-700 overflow-hidden text-ellipsis">{transcript}</p>
+                        </div>
+                    )}
+        
+            </div>
+            <div className=" rounded-md p-4">
+                <button
+                    className="flex justify-between items-center w-full py-2 px-4 bg-rose-600 rounded-md  focus:outline-none"
+                    onClick={() => setsummaryIsOpen(!summaryIsOpen)}
+                >
+                    <span className="text-lg font-semibold">Summary</span>
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-6 w-6 transition-transform transform ${summaryIsOpen ? 'rotate-180' : 'rotate-0'}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d={summaryIsOpen ? 'M19 9l-7 7-7-7' : 'M5 15l7-7 7 7'}
+                    />
+                    </svg>
+                </button>
+                    {summaryIsOpen && (
+                        <div className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
+                        <p className="text-gray-700 overflow-hidden text-ellipsis">{summary}</p>
                         </div>
                     )}
         
