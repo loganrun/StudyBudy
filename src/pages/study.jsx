@@ -8,6 +8,7 @@ import Navbar from '../components/NavBar'
 import ConversationThread from '../components/ConversationThread'
 import { updateLectures } from '../reducers/lecturesSlice'
 import axios from 'axios'
+import Alert from '../components/Alert'
 
 
 function study() {
@@ -17,8 +18,9 @@ function study() {
     const [newNotes, setNewNotes] = useState('')
     const {url, subject, transcript, date, _id, notes, summary} = params.state;
     const dispatch = useDispatch()
+    const [alertMessage, setAlertMessage] = useState('');
     //console.log(_id)
-    console.log(notes)
+    //console.log(notes)
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -34,10 +36,12 @@ const handleSubmit = async (e) => {
       }
     })
 
+    setAlertMessage('Notes Saved');
+
     dispatch(updateLectures(response.data))    
 
   } catch (error) {
-    console.error(error.message)
+    setAlertMessage(error.message)
   }
   
 }
@@ -45,6 +49,7 @@ const handleSubmit = async (e) => {
   return (
 <>
     <Navbar id = "study" />
+    <Alert message={alertMessage} />
     <div className="container mx-auto mt-4">
     <h1 className="text-2xl font-bold mb-4">Lesson Review</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 justify-center mt-20 max-w-screen-lg mx-auto">
