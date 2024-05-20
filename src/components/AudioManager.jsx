@@ -460,7 +460,7 @@ function RecordModal(props) {
         <>
         <Modal
             show={props.show}
-            title={"From Recording"}
+            title={"Recording"}
             content={
                 <>
                     {"This is a demo.  Recordings are limited to 5 minutes to control server costs."}

@@ -11,8 +11,15 @@ const lecturesSlice = createSlice({
   initialState,
   reducers: {
     setLectures: (state, action) => {
-      state.lectures = action.payload;
+      //console.log(action.payload)
+      const sortedLectures = action.payload.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateB - dateA; 
+      });
+      state.lectures = sortedLectures;
       state.isLoading = false;
+      
     },
     updateLectures: (state, action) => {
       state.lectures = [...state.lectures, action.payload];
