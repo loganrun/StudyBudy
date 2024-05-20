@@ -29,7 +29,7 @@ router.get('/upload', async (req, res) => {
 });
 
 router.post('/upload', upload.single('file'), async (req, res) => {
-  const {subject, userId} = req.body;
+  const {subject} = req.body;
   const now = Date.now();
   const date = dateFormat(now, "mediumDate", true);
   
@@ -61,7 +61,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
       console.log(summary)
 
       // Save transcript and summary to the database
-      await saveToDatabase(transcript.text,summary.content,fileUrl, date);
+      await saveToDatabase(transcript.text,summary.content,fileUrl, date, subject);
 
       res.send(`File uploaded successfully: ${fileUrl}`);
     });
@@ -74,10 +74,10 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-async function saveToDatabase(transcript,summary,fileUrl, date) {
+async function saveToDatabase(transcript,summary,fileUrl, date, subject) {
   try {
     const lecture = new Lectures({
-      subject: "Ted Talk",
+      subject: subject,
       url: fileUrl,
       transcript,
       summary,

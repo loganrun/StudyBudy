@@ -12,6 +12,7 @@ import AudioRecorder from "./AudioRecorder";
 import { useAuth } from "../contexts/auth/auth_context";
 import { useNavigate } from 'react-router-dom'
 import Alert from './Alert';
+//import { addSubject } from "../reducers/lecturesSlice";
 
 
 function titleCase(str) {
@@ -399,9 +400,10 @@ function RecordTile(props) {
 function RecordModal(props) {
     const [audioBlob, setAudioBlob] = useState();
     const [alertMessage, setAlertMessage] = useState('');
-    const [subject, setSubject] = useState('')
-   const { uploadAudio } = useAuth()
-   const nav = useNavigate()
+    const subject = useSelector((state) => state.lectures.subject)
+    //const [subject, setSubject] = useState('')
+    const { uploadAudio } = useAuth()
+    const nav = useNavigate()
 
     const onRecordingComplete = (blob) => {
         setAudioBlob(blob);
@@ -412,8 +414,11 @@ function RecordModal(props) {
         
             try {
                 const file = audioBlob
+                //const topic = subject
                 const formData = new FormData();
                 formData.append('file', file);
+                formData.append('subject', subject);
+                //formData.append('userId', userId);
 
                 setAlertMessage('Audio successfully uploaded and is being processed!');
                 
@@ -434,16 +439,16 @@ function RecordModal(props) {
         
     };
 
-    const onChange = (e) =>{
-        console.log(e)
-        setSubject({
-           ...subject,
+    // const onChange = (e) =>{
+    //     console.log(e)
+    //     setSubject({
+    //        ...subject,
 
-            [e.target.name]: e.target.value
+    //         [e.target.name]: e.target.value
            
-        })
-        console.log(subject)
-    }
+    //     })
+    //     console.log(subject)
+    // }
 
 
     const onClose = () => {
@@ -458,7 +463,7 @@ function RecordModal(props) {
             title={"From Recording"}
             content={
                 <>
-                    {"Record audio using your microphone. Recordings limited to 5 minutes to control server costs."}
+                    {"This is a demo.  Recordings are limited to 5 minutes to control server costs."}
                     <AudioRecorder onRecordingComplete={onRecordingComplete} />
                 </>
             }
@@ -466,7 +471,7 @@ function RecordModal(props) {
             submitText={"Save"}
             submitEnabled={audioBlob !== undefined}
             onSubmit={onSubmit}
-            onChange={onChange}
+            
             
         />
         <Alert message={alertMessage} />

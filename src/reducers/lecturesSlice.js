@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   lectures: null,
   isLoading: true,
+  subject: null,
 };
 
 const lecturesSlice = createSlice({
@@ -18,9 +19,12 @@ const lecturesSlice = createSlice({
     },
     deleteLecture: (state, action) => {
       state.lectures = state.lectures.filter(lecture => lecture._id !== action.payload);
-    }
+    },
+    addSubject: (state, action) => {
+      state.subject = action.payload;
+    },
   },
 });
 
-export const { setLectures, updateLectures, deleteLecture } = lecturesSlice.actions;
+export const { setLectures, updateLectures, deleteLecture, addSubject } = lecturesSlice.actions;
 export default lecturesSlice.reducer;
