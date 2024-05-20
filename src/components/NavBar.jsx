@@ -11,7 +11,7 @@ const Navbar = (props) => {
 
   const handleLogOut = () => {
    try {
-    dispatch(logoutSuccess)
+    dispatch(logoutSuccess())
     nav('/login')
     
    } catch (error) {

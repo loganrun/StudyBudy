@@ -21,12 +21,12 @@ const [inputValue, setInputValue] = useState('');
     dispatch(addSubject(inputValue));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputValue.trim() !== '') {
-      setIsSubmitted(true);
-    }
-  };
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (inputValue.trim() !== '') {
+//       setIsSubmitted(true);
+//     }
+//   };
 
   if (isSubmitted) {
     return null; // Hide the form after submission
@@ -40,7 +40,7 @@ return (
         <div className='container flex flex-col  justify-center items-center'>
         <p>Add the topic of the lecture</p>
         <form 
-        onSubmit={handleSubmit}
+        //onSubmit={handleSubmit}
         className="bg-white p-10 rounded-lg shadow-lg flex"
       >
         <Subject/>
